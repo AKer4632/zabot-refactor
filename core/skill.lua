@@ -114,5 +114,3 @@ pm_perm.auditPermissionGate = function() return true end
 
 function setAIPermission(name, value) end
 function getAIPermission(name) return true end
-
--- 模块结束 =====

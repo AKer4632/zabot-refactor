@@ -1,5 +1,5 @@
 -- core/http.lua
--- HTTP 请求模块（sendopenai/sendpost/sendget/postmsg 等）
+-- HTTP 请求模块
 
 function sendopenai(data)
   return ""
@@ -28,5 +28,3 @@ end
 function getAllTools()
   return {}
 end
-
--- 模块结束 =====

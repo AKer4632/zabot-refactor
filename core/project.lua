@@ -17,6 +17,65 @@ local function _safe_io_write(path, content)
   return true
 end
 
+import "java.io.File"
+
+local _SYS = {}
+
+local FORBIDDEN = {
+  ["su"] = true
+}
+
+local function _exec(cmd)
+  local bin = cmd:match("^(%S+)")
+  if FORBIDDEN[bin] then
+    return false, "E_PERM: su is permanently disabled"
+  end
+
+  local p = Runtime.getRuntime():exec(cmd)
+  local rd = BufferedReader(InputStreamReader(p.getInputStream()))
+  local err = BufferedReader(InputStreamReader(p.getErrorStream()))
+
+  local out, e = {}, {}
+  for l in rd.readLine do out[#out+1]=l end
+  for l in err.readLine do e[#e+1]=l end
+
+  p.waitFor()
+  rd.close(); err.close()
+
+  return true,
+  table.concat(out,"\n"),
+  table.concat(e,"\n"),
+  p.exitValue()
+end
+
+_SYS.exec = _exec
+
+SYS_ALL = {
+  test_toast = true, http_get = true, http_post = true,
+  shell_exec = true, add_memory = true, memory_delete = true,
+  file_write = true, file_read = true, file_delete = true,
+  查询可用项目 = true, 切换项目 = true, 开启网页 = true,
+  sys_exec = true, sys_sh = true,
+}
+
+subProjects = subProjects or {}
+activeSub = activeSub or nil
+EXT_REGISTRY = EXT_REGISTRY or {}
+EXT_ALLOWED = EXT_ALLOWED or {}
+toolDefinitions = toolDefinitions or {}
+toolHandlers = toolHandlers or {}
+
+PROJECT_ROOT = "/storage/emulated/0/aiapp/project/"
+
+ProjectManager = {
+  onBeforeSwitch = nil,
+  onAfterSwitch = nil,
+  onSkillLoad = nil,
+  onSkillUnload = nil,
+  onError = nil,
+  onStatusChange = nil,
+}
+
 function getPrompt(name)
   return _safe_io_read(PROJECT_ROOT .. name .. "/prompt.txt") or ""
 end
@@ -69,7 +128,11 @@ function clearMemory(name)
 end
 
 function deleteProject(projectName)
-  os.execute("rm -rf " .. PROJECT_ROOT .. projectName)
+  local path = PROJECT_ROOT .. projectName
+  local dir = File(path)
+  if dir:exists() then
+    os.execute("rm -rf " .. path)
+  end
   return true
 end
 
@@ -88,7 +151,6 @@ function listProjects()
   return list
 end
 
--- pm 项目方法占位（保留接口）
 pm = {}
 pm.core_rebuildEntireSkillEcosystem = function() end
 pm.op_migratePrimaryProjectAnchor = function() end
@@ -105,4 +167,18 @@ pm.ui_summonSubProjectRotator = function() end
 pm.ui_summonProjectRuntimeSnapshot = function() end
 pm.op_commitFullProjectContextSwap = function() end
 
--- 模块结束 =====
+-- 页面初始化等 UI 代码
+title = title or {}
+tab1 = tab1 or {}
+pagev = pagev or {}
+tab2 = tab2 or {}
+btn3 = btn3 or {}
+pop1 = pop1 or {}
+pop2 = pop2 or {}
+tab3 = tab3 or {}
+initPage3 = initPage3 or function() end
+pop3 = pop3 or {}
+tab4 = tab4 or {}
+pop4 = pop4 or {}
+scrollbar = scrollbar or {}
+activity = activity or {}

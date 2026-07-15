@@ -1,29 +1,26 @@
 -- core/api.lua
 -- API 管理模块
 
-local function _safe_io_read(path)
-  local f = io.open(path, "r")
-  if not f then return nil end
-  local c = f:read("*a")
-  f:close()
-  return c
-end
-local function _safe_io_write(path, content)
-  local f = io.open(path, "w")
-  if not f then return false end
-  f:write(content or "")
-  f:close()
-  return true
-end
-
 function saveApi(name, data)
   local path = "/storage/emulated/0/aiapp/api/" .. name .. ".json"
-  return _safe_io_write(path, data)
+  local f = io.open(path, "w")
+  if f then
+    f:write(data or "")
+    f:close()
+    return true
+  end
+  return false
 end
 
 function getApiData(name)
   local path = "/storage/emulated/0/aiapp/api/" .. name .. ".json"
-  return _safe_io_read(path) or "{}"
+  local f = io.open(path, "r")
+  if f then
+    local content = f:read("*a")
+    f:close()
+    return content
+  end
+  return "{}"
 end
 
 function setApiName(name, value) end
@@ -58,5 +55,3 @@ function file_exists(path)
   if f then f:close(); return true end
   return false
 end
-
--- 模块结束 =====
