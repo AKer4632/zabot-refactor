@@ -29,4 +29,4 @@ pagev.addOnPageChangeListener{
   end
 }
 
-print("ZA BOT modular loaded")
+print("ZA BOT 完整重构版已加载")
