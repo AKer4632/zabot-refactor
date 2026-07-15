@@ -1,46 +1,41 @@
 -- config.lua
--- 全局配置与路径常量
--- 集中管理，避免硬编码散落
+-- 全局配置与常量（提取自原 main.lua 头部）
 
-local M = {}
+DEBUG_MODE = false
+SOFT_INPUT_ADJUST_RESIZE = 0x10
 
-M.DEBUG_MODE = false
-
--- 路径常量（唯一数据源）
-M.PROJECT_ROOT = "/storage/emulated/0/aiapp/project/"
-M.SYS_CFG_DIR = "/storage/emulated/0/aiapp/setting/"
-M.BASE_STORAGE = "/storage/emulated/0/aiapp/"
-
--- 权限开关
-M.SYS_ALL = {
-  test_toast = true,
-  http_get = true,
-  http_post = true,
-  shell_exec = true,
-  add_memory = true,
-  memory_delete = true,
-  file_write = true,
-  file_read = true,
-  file_delete = true,
-  ["查询可用项目"] = true,
-  ["切换项目"] = true,
-  ["开启网页"] = true,
-  sys_exec = true,
-  sys_sh = true,
+SYS_ALL = {
+  test_toast = true, http_get = true, http_post = true,
+  shell_exec = true, add_memory = true, memory_delete = true,
+  file_write = true, file_read = true, file_delete = true,
+  查询可用项目 = true, 切换项目 = true, 开启网页 = true,
+  sys_exec = true, sys_sh = true,
 }
 
--- 子项目状态（惰性初始化）
-M.subProjects = {}
-M.activeSub = nil
-M.EXT_REGISTRY = {}
-M.EXT_ALLOWED = {}
+subProjects = subProjects or {}
+activeSub = activeSub or nil
+EXT_REGISTRY = EXT_REGISTRY or {}
+EXT_ALLOWED = EXT_ALLOWED or {}
+toolDefinitions = toolDefinitions or {}
+toolHandlers = toolHandlers or {}
 
--- 最大工具轮次
-M.MAX_TOOL_ROUNDS = 10
+PROJECT_ROOT = "/storage/emulated/0/aiapp/project/"
 
--- FORBIDDEN binaries
-M.FORBIDDEN = {
-  ["su"] = true
+ProjectManager = {
+  onBeforeSwitch = nil,
+  onAfterSwitch = nil,
+  onSkillLoad = nil,
+  onSkillUnload = nil,
+  onError = nil,
+  onStatusChange = nil,
 }
 
-return M
+-- 路径常量
+SYS_CFG_DIR = "/storage/emulated/0/aiapp/setting/"
+SYS_CFG_PATH = SYS_CFG_DIR .. "sys.json"
+PERM_CFG_PATH = "/storage/emulated/0/aiapp/setting/perm.json"
+MAX_TOOL_ROUNDS = 10
+SKILL_REGISTRY = SKILL_REGISTRY or {}
+CURRENT_SKILL = CURRENT_SKILL or nil
+ACTIVE_SKILL_IDS = ACTIVE_SKILL_IDS or {}
+SYS_ENABLED = SYS_ENABLED or {}
