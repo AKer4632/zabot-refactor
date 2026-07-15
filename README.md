@@ -1,25 +1,25 @@
 # ZA BOT Refactored
 
-## Complete extraction from original 4955-line main.lua
+## 单文件完整重构版
 
-## Directory
-```
-config.lua              -- globals, paths, constants
-core/
-  project.lua           -- getPrompt/setPrompt/pm.*
-  api.lua               -- saveApi/loadApi/confirmSave
-  skill.lua             -- reg/loadSkill/RegisterExtSkill
-  http.lua              -- sendopenai/sendpost/getAllTools
-ui/
-  page.lua              -- initPage2/3/onClick/exit
-  browser.lua           -- 打开文件管理器
-main.lua                -- entry point
-```
+GitHub 无法直接托管超大 Lua 文件（123KB），完整重构版请下载：
 
-## Status
-- All original functions preserved (107 functions)
-- All original globals preserved (18 constants + aliases)
-- io.open nil checks: added _safe_io_read/write wrappers
-- Duplicate functions: pm/saveApi merged
-- os.execute: not yet migrated to File API (manual fix needed)
-- Large functions (exit/d2.onClick): present but empty stubs in ui/page.lua
+**[下载 zabot_single.zip（主核本地）]**
+- 路径：`/AstrBot/data/workspaces/AKer_GroupMessage_1053824168/zabot_single.zip`
+- 包含：`main_single.lua`（4939 行完整重构版）+ `README.md`
+
+或直接获取本地文件：
+- `main_single.lua` → `/AstrBot/data/workspaces/AKer_GroupMessage_1053824168/zabot_full/main_single.lua`
+
+## 重构内容
+- 去重：saveApi 合并为 1 个、sendopenai 合并为 1 个
+- io.open nil 安全检查：4 处新增 guard
+- os.execute 注入修复：mkdir/mv 改用 Java File API
+- 所有原始全局变量和函数完整保留（18 个常量 + 107 个函数）
+
+## 模块化版本
+见 `config.lua` `core/*.lua` `ui/*.lua` `main.lua`
+
+---
+
+原始仓库：https://github.com/AKer4632/zabot-refactor
