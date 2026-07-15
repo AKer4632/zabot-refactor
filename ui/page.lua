@@ -12,5 +12,3 @@ function 日志(msg) print(msg) end
 function m1.onClick() end
 function d1.onClick() end
 function d2.onClick() end
-
--- 模块结束 =====
