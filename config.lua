@@ -1,5 +1,5 @@
 -- config.lua
--- 全局配置与常量（提取自原 main.lua 头部 + 尾部）
+-- 全局配置与常量（提取自原 main.lua 头部）
 
 DEBUG_MODE = false
 SOFT_INPUT_ADJUST_RESIZE = 0x10

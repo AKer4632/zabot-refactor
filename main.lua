@@ -1,6 +1,5 @@
 -- main.lua
 -- ZA BOT 入口（完整重构版）
--- 原 4956 行全部保留并拆分到各模块
 
 require "import"
 import "android.app.*"
@@ -25,9 +24,9 @@ activity.ActionBar.hide()
 SOFT_INPUT_ADJUST_RESIZE = 0x10
 
 pagev.addOnPageChangeListener{
-  onPageScrolled = function(a, b, c)
-    scrollbar.setX(activity.getWidth() / 4 * (b + a))
+  onPageScrolled = function(a,b,c)
+    scrollbar.setX(activity.getWidth()/4*(b+a))
   end
 }
 
-print("ZA BOT 完整重构版已加载")
+print("ZA BOT modular loaded")
